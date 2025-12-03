@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Salgados - Cardápio & Pedidos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥟</text></svg>">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><i class="fas fa-utensils"></i> MS Salgados</h1>
+                <p class="slogan">Faça seu pedido online!</p>
+            </div>
+            
+            <div class="header-right">
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> (19) 992326554</p>
+                    <p><i class="fas fa-clock"></i> Aberto todos os dias</p>
+                </div>
+                
+                <!-- Carrinho de Compras -->
+                <div class="cart-container">
+                    <button class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <span class="cart-total" id="cartTotal">R$ 0,00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu de Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-list" id="navList">
+                <li><a href="#montar-pedido" class="nav-link active"><i class="fas fa-shopping-cart"></i> Fazer Pedido</a></li>
+                <li><a href="#cardapio" class="nav-link"><i class="fas fa-book"></i> Cardápio</a></li>
+                <li><a href="#meu-pedido" class="nav-link"><i class="fas fa-clipboard-list"></i> Meu Pedido</a></li>
+            </ul>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Seção Fazer Pedido -->
+        <section class="menu-section" id="montar-pedido">
+            <h2 class="section-title">
+                <i class="fas fa-shopping-cart"></i> Fazer Pedido
+            </h2>
+            
+            <div class="order-builder">
+                <!-- Passo 1: Escolher Tipo -->
+                <div class="builder-step active" id="step1">
+                    <h3><span class="step-number">1</span> Escolha o Tipo de Salgado</h3>
+                    
+                    <div class="type-grid">
+                        <div class="type-card" data-type="fritos">
+                            <div class="type-icon">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <h4>Salgados Fritos</h4>
+                            <div class="type-price">A partir de R$ 37,00</div>
+                            <div class="type-desc">50 unidades (meio cento)</div>
+                        </div>
+                        
+                        <div class="type-card" data-type="assados">
+                            <div class="type-icon">
+                                <i class="fas fa-bread-slice"></i>
+                            </div>
+                            <h4>Salgados Assados</h4>
+                            <div class="type-price">A partir de R$ 50,00</div>
+                            <div class="type-desc">50 unidades (meio cento)</div>
+                        </div>
+                        
+                        <div class="type-card" data-type="paozinho">
+                            <div class="type-icon">
+                                <i class="fas fa-bun"></i>
+                            </div>
+                            <h4>Pãozinho Recheado</h4>
+                            <div class="type-price">R$ 95,00</div>
+                            <div class="type-desc">100 unidades (cento)</div>
+                        </div>
+                        
+                        <div class="type-card" data-type="miniPizza">
+                            <div class="type-icon">
+                                <i class="fas fa-pizza-slice"></i>
+                            </div>
+                            <h4>Mini Pizza</h4>
+                            <div class="type-price">R$ 100,00</div>
+                            <div class="type-desc">100 unidades (cento)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Passo 2: Escolher Quantidade -->
+                <div class="builder-step" id="step2">
+                    <h3><span class="step-number">2</span> Escolha a Quantidade</h3>
+                    
+                    <div class="quantity-grid" id="quantityGrid">
+                        <!-- Opções carregadas dinamicamente -->
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button class="btn-step-back" id="backToStep1">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Passo 3: Escolher Sabores -->
+                <div class="builder-step" id="step3">
+                    <h3><span class="step-number">3</span> Escolha os Sabores</h3>
+                    <p class="step-subtitle">Selecione até 5 sabores diferentes</p>
+                    
+                    <div class="flavors-container">
+                        <div class="flavors-grid" id="flavorsGrid">
+                            <!-- Sabores carregados dinamicamente -->
+                        </div>
+                        
+                        <div class="selected-flavors-panel">
+                            <h4>Sabores Selecionados <span id="selectedCount">(0/5)</span></h4>
+                            <div class="selected-list" id="selectedList">
+                                <p class="empty-message">Nenhum sabor selecionado</p>
+                            </div>
+                            <div class="flavors-actions">
+                                <button class="btn-clear-flavors" id="clearFlavors">
+                                    <i class="fas fa-times"></i> Limpar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button class="btn-step-back" id="backToStep2">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="btn-step-next" id="nextToStep4" disabled>
+                            Continuar <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Passo 4: Adicionar Observações -->
+                <div class="builder-step" id="step4">
+                    <h3><span class="step-number">4</span> Observações</h3>
+                    
+                    <div class="notes-container">
+                        <div class="order-summary-preview">
+                            <h4>Resumo do Item:</h4>
+                            <div class="preview-item">
+                                <strong id="previewType">-</strong>
+                                <div id="previewQuantity">-</div>
+                                <div id="previewFlavors">-</div>
+                            </div>
+                        </div>
+                        
+                        <div class="notes-input">
+                            <label for="itemNotes"><i class="fas fa-sticky-note"></i> Observações (opcional)</label>
+                            <textarea id="itemNotes" placeholder="Ex: Bem fritos, sem pimenta, etc." rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="step-actions">
+                        <button class="btn-step-back" id="backToStep3">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="btn-add-to-cart-final" id="addToCartBtn">
+                            <i class="fas fa-cart-plus"></i> Adicionar ao Pedido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Meu Pedido -->
+        <section class="menu-section" id="meu-pedido">
+            <h2 class="section-title">
+                <i class="fas fa-clipboard-list"></i> Meu Pedido
+            </h2>
+            
+            <div class="order-summary-section">
+                <div class="order-items-container" id="orderItemsContainer">
+                    <div class="empty-order">
+                        <i class="fas fa-shopping-basket fa-3x"></i>
+                        <h3>Seu pedido está vazio</h3>
+                        <p>Adicione itens do cardápio para começar</p>
+                    </div>
+                </div>
+                
+                <div class="order-total-section">
+                    <div class="total-line">
+                        <span>Total do Pedido:</span>
+                        <span id="orderTotal">R$ 0,00</span>
+                    </div>
+                    
+                    <button class="btn-finalize-order" id="finalizeOrderBtn" disabled>
+                        <i class="fab fa-whatsapp"></i> Finalizar Pedido no WhatsApp
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Cardápio -->
+        <section class="menu-section" id="cardapio">
+            <h2 class="section-title">
+                <i class="fas fa-book"></i> Cardápio Completo
+            </h2>
+            
+            <!-- Salgados Fritos -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h3><i class="fas fa-fish"></i> Salgados Fritos</h3>
+                    <span class="category-badge">Mais Vendidos</span>
+                </div>
+                
+                <div class="category-content">
+                    <div class="category-prices">
+                        <h4>Preços:</h4>
+                        <ul>
+                            <li><strong>Meio Cento Frito (50 un):</strong> R$ 37,00</li>
+                            <li><strong>Cento Frito (100 un):</strong> R$ 67,00</li>
+                            <li><strong>Cento Cru (100 un):</strong> R$ 60,00</li>
+                            <li><strong>150 Salgadinhos:</strong> R$ 100,00 (promoção)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="category-flavors">
+                        <h4>Sabores Disponíveis:</h4>
+                        <div class="flavors-list">
+                            <span>Coxinha</span>
+                            <span>Enroladinho de Presunto e queijo</span>
+                            <span>Bolinho de Mandioca com queijo</span>
+                            <span>Quadrado de Calabresa com queijo</span>
+                            <span>Risoles de Milho com queijo</span>
+                            <span>Risoles de Brócolis com queijo</span>
+                            <span>Risoles de Palmito</span>
+                            <span>Risoles de Carne</span>
+                            <span>Mini Pastéis (Carne, Frango, Queijo)</span>
+                            <span>Croquete</span>
+                            <span>Quibe</span>
+                            <span>Bolinha de queijo</span>
+                            <span>Risoles de Caturpiry</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-footer">
+                    <p><i class="fas fa-info-circle"></i> Acompanha 1 potinho de molhinho a cada 100 salgados</p>
+                </div>
+            </div>
+            
+            <!-- Salgados Assados -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h3><i class="fas fa-bread-slice"></i> Salgados Assados</h3>
+                </div>
+                
+                <div class="category-content">
+                    <div class="category-prices">
+                        <h4>Preços:</h4>
+                        <ul>
+                            <li><strong>Meio Cento (50 un):</strong> R$ 50,00</li>
+                            <li><strong>Cento (100 un):</strong> R$ 95,00</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="category-flavors">
+                        <h4>Sabores Disponíveis:</h4>
+                        <div class="flavors-list">
+                            <span>Esfirra de Carne</span>
+                            <span>Tortinhas de Frango com Caturpiry</span>
+                            <span>Empadas de Palmito</span>
+                            <span>Tortinha de Brócolis com queijo</span>
+                            <span>Empadas de Frango</span>
+                            <span>Tortinha de Palmito</span>
+                            <span>Quiche Quatro Queijo</span>
+                            <span>Quiche de Alho Poró</span>
+                            <span>Quiche Presunto e Queijo</span>
+                            <span>Quiche de Frango</span>
+                            <span>Quiche Brócolis com Queijo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-footer">
+                    <p><i class="fas fa-info-circle"></i> Acompanha 1 potinho de molhinho a cada 100 salgados</p>
+                </div>
+            </div>
+            
+            <!-- Pãozinho Recheado -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h3><i class="fas fa-bun"></i> Pãozinho Recheado</h3>
+                </div>
+                
+                <div class="category-content">
+                    <div class="category-prices">
+                        <h4>Preços:</h4>
+                        <ul>
+                            <li><strong>Cento (100 un):</strong> R$ 95,00</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="category-flavors">
+                        <h4>Sabores Disponíveis:</h4>
+                        <div class="flavors-list">
+                            <span>Pãozinho recheado com paté de cenoura</span>
+                            <span>Pãozinho recheado com Pate de Frango</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-footer">
+                    <p><i class="fas fa-info-circle"></i> Acompanha 1 potinho de molhinho a cada 100 salgados</p>
+                </div>
+            </div>
+            
+            <!-- Mini Pizza -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h3><i class="fas fa-pizza-slice"></i> Mini Pizza</h3>
+                </div>
+                
+                <div class="category-content">
+                    <div class="category-prices">
+                        <h4>Preços:</h4>
+                        <ul>
+                            <li><strong>Cento (100 un):</strong> R$ 100,00</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="category-flavors">
+                        <h4>Sabores Disponíveis:</h4>
+                        <div class="flavors-list">
+                            <span>Mini Pizza Calabresa com queijo</span>
+                            <span>Mini Pizza de Presunto e queijo</span>
+                            <span>Mini Pizza de Frango com Caturpiry e queijo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-footer">
+                    <p><i class="fas fa-info-circle"></i> Acompanha 1 potinho de molhinho a cada 100 salgados</p>
+                </div>
+            </div>
+            
+            <!-- Pastel -->
+            <div class="category-card">
+                <div class="category-header">
+                    <h3><i class="fas fa-pie-chart"></i> Pastel</h3>
+                </div>
+                
+                <div class="category-content">
+                    <div class="category-prices">
+                        <h4>Preços Unitários:</h4>
+                        <ul>
+                            <li><strong>Pastel Frito:</strong> R$ 3,50 cada</li>
+                            <li><strong>Pastel Cru:</strong> R$ 3,00 cada</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="category-flavors">
+                        <h4>Sabores Disponíveis:</h4>
+                        <div class="flavors-list">
+                            <span>Pastel de Carne</span>
+                            <span>Pastel de Frango</span>
+                            <span>Pastel de Queijo</span>
+                            <span>Pastel de Palmito</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-footer">
+                    <p><i class="fas fa-info-circle"></i> Acompanha molhinho</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Checkout -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content checkout-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-clipboard-check"></i> Finalizar Pedido</h3>
+                <button class="modal-close" id="closeCheckoutModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="checkout-steps">
+                    <!-- Passo 1: Informações Pessoais -->
+                    <div class="checkout-step active" id="checkoutStep1">
+                        <h4><i class="fas fa-user"></i> Seus Dados</h4>
+                        
+                        <form class="checkout-form">
+                            <div class="form-group">
+                                <label for="customerName">Nome Completo *</label>
+                                <input type="text" id="customerName" required placeholder="Digite seu nome completo">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customerPhone">Telefone/WhatsApp *</label>
+                                <input type="tel" id="customerPhone" required placeholder="(11) 99999-9999">
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-next-step" id="nextToCheckoutStep2">
+                                    Continuar <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Passo 2: Endereço -->
+                    <div class="checkout-step" id="checkoutStep2">
+                        <h4><i class="fas fa-map-marker-alt"></i> Endereço de Entrega</h4>
+                        
+                        <form class="checkout-form">
+                            <div class="form-group">
+                                <label for="deliveryAddress">Endereço Completo *</label>
+                                <textarea id="deliveryAddress" rows="3" required placeholder="Rua, Número, Bairro, Cidade, Estado, CEP"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="deliveryTime">Horário Preferencial</label>
+                                <select id="deliveryTime">
+                                    <option value="">Selecione um horário</option>
+                                    <option value="12:00-13:00">12:00 - 13:00</option>
+                                    <option value="13:00-14:00">13:00 - 14:00</option>
+                                    <option value="18:00-19:00">18:00 - 19:00</option>
+                                    <option value="19:00-20:00">19:00 - 20:00</option>
+                                    <option value="20:00-21:00">20:00 - 21:00</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-prev-step" id="backToCheckoutStep1">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </button>
+                                <button type="button" class="btn-next-step" id="nextToCheckoutStep3">
+                                    Continuar <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Passo 3: Pagamento e Observações -->
+                    <div class="checkout-step" id="checkoutStep3">
+                        <h4><i class="fas fa-credit-card"></i> Pagamento e Observações</h4>
+                        
+                        <form class="checkout-form">
+                            <div class="form-group">
+                                <label for="paymentMethod">Forma de Pagamento</label>
+                                <select id="paymentMethod">
+                                    <option value="Dinheiro">Dinheiro</option>
+                                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                    <option value="Cartão de Débito">Cartão de Débito</option>
+                                    <option value="PIX">PIX</option>
+                                    <option value="Transferência">Transferência Bancária</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="finalNotes">Observações Adicionais</label>
+                                <textarea id="finalNotes" rows="2" placeholder="Alguma observação sobre o pedido?"></textarea>
+                            </div>
+                            
+                            <div class="order-summary-checkout">
+                                <h5>Resumo do Pedido:</h5>
+                                <div id="checkoutOrderSummary">
+                                    <!-- Resumo será preenchido aqui -->
+                                </div>
+                                <div class="checkout-total">
+                                    <span>Total:</span>
+                                    <span id="checkoutTotal">R$ 0,00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-prev-step" id="backToCheckoutStep2">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </button>
+                                <button type="submit" class="btn-submit-order">
+                                    <i class="fab fa-whatsapp"></i> Enviar Pedido
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-utensils"></i> MS Salgados</h3>
+                    <p>Os melhores salgados da região, faça seu pedido online!</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <p><i class="fas fa-phone"></i> (19) 99232-6554</p>
+                    <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/5519992326554" class="whatsapp-link">WhatsApp</a></p>
+                    <p><i class="fas fa-clock"></i> Aberto todos os dias</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Formas de Pagamento</h3>
+                    <div class="payment-methods">
+                        <i class="fas fa-money-bill-wave" title="Dinheiro"></i>
+                        <i class="fas fa-credit-card" title="Cartão"></i>
+                        <i class="fab fa-pix" title="PIX"></i>
+                    </div>
+                    <p>Delivery disponível</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MS Salgados. Todos os direitos reservados.</p>
+                <p>Desenvolvido com <i class="fas fa-heart"></i> para amantes de salgados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Voltar ao Topo -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/order.js"></script>
+</body>
+</html>
